@@ -13,6 +13,32 @@ class Home extends StatefulWidget {
 
 
 class _HomeState extends State<Home> {
+  final textController = TextEditingController();
+
+  var isLoading = false;
+  String? error;
+
+  var cepResult = ();
+
+  Future<void> searchCep(String cep) async{
+    try {
+      cepResult = ();
+      error = null; 
+      setState(() {
+        isLoading = true;
+      });
+      final response = await Dio().get('viacep.com.br/ws/$cep/json/');
+
+      setState(() {
+        cepResult = response.data;
+      });
+    } catch (e){
+      error = "Erro na pesquisa";
+    }
+    setState(() {
+      isLoading = false;
+    });
+  }
  
   @override
   Widget build(BuildContext context) {
@@ -35,15 +61,23 @@ class _HomeState extends State<Home> {
                 labelText: "Digite o CEP para encontrar o endereço",
               ),
               style: TextStyle(fontSize: 15),
+              controller: textController,
             ),
 
             ElevatedButton(
               child: Text("Consultar", style: TextStyle(fontSize: 15)),
-              onPressed: () {},
+              onPressed: () {
+                searchCep(textController.text);
+              },
             ),
+            if (isLoading) Expanded (child: Center(child: CircularProgressIndicator())),
+            if (error != null) Text(error!, style: TextStyle(color: Colors.red)),
+            if (!isLoading) Text("Cep: ${cepResult['cep']}"),
           ],
         ),
       ),
     );
   }
 }
+
+
