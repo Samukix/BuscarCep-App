@@ -1,6 +1,6 @@
+import 'package:buscacep/home_page.dart';
 import 'package:flutter/material.dart';
-import 'Home.dart';
 
 void main() {
-  runApp(MaterialApp(home: Home()));
+  runApp(MaterialApp(home: HomePage()));
 }
