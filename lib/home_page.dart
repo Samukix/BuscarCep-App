@@ -38,6 +38,7 @@ class _HomePageState extends State<HomePage> {
             ),
             SizedBox(height: 16),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.blue),
               onPressed: () {
                 final cep = _controller.text.trim();
                 if (cep.isNotEmpty) {
@@ -48,7 +49,7 @@ class _HomePageState extends State<HomePage> {
                   );
                 }
               },
-              child: Text('Buscar CEP'),
+              child: Text('Pesquisar', style: TextStyle(color: Colors.white , fontWeight: FontWeight.bold),),
             ),
             SizedBox(height: 24),
             BlocBuilder<CepBloc, CepState>(
